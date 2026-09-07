@@ -1,0 +1,22 @@
+[
+  {
+    "event": "DATASET_INGESTION",
+    "source": "https://archive.ics.uci.edu/static/public/352/online+retail.zip",
+    "filename": "Online Retail.xlsx",
+    "file_size_bytes": 23715344,
+    "row_count": 541909,
+    "column_count": 8,
+    "columns": [
+      "InvoiceNo",
+      "StockCode",
+      "Description",
+      "Quantity",
+      "InvoiceDate",
+      "UnitPrice",
+      "CustomerID",
+      "Country"
+    ],
+    "timestamp": "2026-09-07T10:19:16.404066",
+    "status": "SUCCESS"
+  }
+]

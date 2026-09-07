@@ -1,0 +1,132 @@
+[
+  {
+    "batch_id": "batch_2010_12",
+    "period": "2010-12",
+    "filename": "orders_2010_12.csv",
+    "filepath": "/Users/d.govardhanreddy/meg MLOPS proj/data/raw/batches/orders_2010_12.csv",
+    "row_count": 42481,
+    "min_invoice_date": "2010-12-01 08:26:00",
+    "max_invoice_date": "2010-12-23 17:41:00",
+    "status": "READY_FOR_INGESTION"
+  },
+  {
+    "batch_id": "batch_2011_01",
+    "period": "2011-01",
+    "filename": "orders_2011_01.csv",
+    "filepath": "/Users/d.govardhanreddy/meg MLOPS proj/data/raw/batches/orders_2011_01.csv",
+    "row_count": 35147,
+    "min_invoice_date": "2011-01-04 10:00:00",
+    "max_invoice_date": "2011-01-31 16:59:00",
+    "status": "READY_FOR_INGESTION"
+  },
+  {
+    "batch_id": "batch_2011_02",
+    "period": "2011-02",
+    "filename": "orders_2011_02.csv",
+    "filepath": "/Users/d.govardhanreddy/meg MLOPS proj/data/raw/batches/orders_2011_02.csv",
+    "row_count": 27707,
+    "min_invoice_date": "2011-02-01 08:23:00",
+    "max_invoice_date": "2011-02-28 17:04:00",
+    "status": "READY_FOR_INGESTION"
+  },
+  {
+    "batch_id": "batch_2011_03",
+    "period": "2011-03",
+    "filename": "orders_2011_03.csv",
+    "filepath": "/Users/d.govardhanreddy/meg MLOPS proj/data/raw/batches/orders_2011_03.csv",
+    "row_count": 36748,
+    "min_invoice_date": "2011-03-01 08:30:00",
+    "max_invoice_date": "2011-03-31 19:55:00",
+    "status": "READY_FOR_INGESTION"
+  },
+  {
+    "batch_id": "batch_2011_04",
+    "period": "2011-04",
+    "filename": "orders_2011_04.csv",
+    "filepath": "/Users/d.govardhanreddy/meg MLOPS proj/data/raw/batches/orders_2011_04.csv",
+    "row_count": 29916,
+    "min_invoice_date": "2011-04-01 08:22:00",
+    "max_invoice_date": "2011-04-28 19:53:00",
+    "status": "READY_FOR_INGESTION"
+  },
+  {
+    "batch_id": "batch_2011_05",
+    "period": "2011-05",
+    "filename": "orders_2011_05.csv",
+    "filepath": "/Users/d.govardhanreddy/meg MLOPS proj/data/raw/batches/orders_2011_05.csv",
+    "row_count": 37030,
+    "min_invoice_date": "2011-05-01 10:51:00",
+    "max_invoice_date": "2011-05-31 15:53:00",
+    "status": "READY_FOR_INGESTION"
+  },
+  {
+    "batch_id": "batch_2011_06",
+    "period": "2011-06",
+    "filename": "orders_2011_06.csv",
+    "filepath": "/Users/d.govardhanreddy/meg MLOPS proj/data/raw/batches/orders_2011_06.csv",
+    "row_count": 36874,
+    "min_invoice_date": "2011-06-01 07:37:00",
+    "max_invoice_date": "2011-06-30 20:08:00",
+    "status": "READY_FOR_INGESTION"
+  },
+  {
+    "batch_id": "batch_2011_07",
+    "period": "2011-07",
+    "filename": "orders_2011_07.csv",
+    "filepath": "/Users/d.govardhanreddy/meg MLOPS proj/data/raw/batches/orders_2011_07.csv",
+    "row_count": 39518,
+    "min_invoice_date": "2011-07-01 08:16:00",
+    "max_invoice_date": "2011-07-31 16:04:00",
+    "status": "READY_FOR_INGESTION"
+  },
+  {
+    "batch_id": "batch_2011_08",
+    "period": "2011-08",
+    "filename": "orders_2011_08.csv",
+    "filepath": "/Users/d.govardhanreddy/meg MLOPS proj/data/raw/batches/orders_2011_08.csv",
+    "row_count": 35284,
+    "min_invoice_date": "2011-08-01 08:30:00",
+    "max_invoice_date": "2011-08-31 17:45:00",
+    "status": "READY_FOR_INGESTION"
+  },
+  {
+    "batch_id": "batch_2011_09",
+    "period": "2011-09",
+    "filename": "orders_2011_09.csv",
+    "filepath": "/Users/d.govardhanreddy/meg MLOPS proj/data/raw/batches/orders_2011_09.csv",
+    "row_count": 50226,
+    "min_invoice_date": "2011-09-01 08:25:00",
+    "max_invoice_date": "2011-09-30 17:22:00",
+    "status": "READY_FOR_INGESTION"
+  },
+  {
+    "batch_id": "batch_2011_10",
+    "period": "2011-10",
+    "filename": "orders_2011_10.csv",
+    "filepath": "/Users/d.govardhanreddy/meg MLOPS proj/data/raw/batches/orders_2011_10.csv",
+    "row_count": 60742,
+    "min_invoice_date": "2011-10-02 10:32:00",
+    "max_invoice_date": "2011-10-31 17:19:00",
+    "status": "READY_FOR_INGESTION"
+  },
+  {
+    "batch_id": "batch_2011_11",
+    "period": "2011-11",
+    "filename": "orders_2011_11.csv",
+    "filepath": "/Users/d.govardhanreddy/meg MLOPS proj/data/raw/batches/orders_2011_11.csv",
+    "row_count": 84711,
+    "min_invoice_date": "2011-11-01 08:16:00",
+    "max_invoice_date": "2011-11-30 17:42:00",
+    "status": "READY_FOR_INGESTION"
+  },
+  {
+    "batch_id": "batch_2011_12",
+    "period": "2011-12",
+    "filename": "orders_2011_12.csv",
+    "filepath": "/Users/d.govardhanreddy/meg MLOPS proj/data/raw/batches/orders_2011_12.csv",
+    "row_count": 25525,
+    "min_invoice_date": "2011-12-01 08:12:00",
+    "max_invoice_date": "2011-12-09 12:50:00",
+    "status": "READY_FOR_INGESTION"
+  }
+]

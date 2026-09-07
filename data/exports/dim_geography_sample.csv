@@ -1,0 +1,39 @@
+geography_key,country_name,region,market_tier
+1,Australia,Asia-Pacific,Tier 3 - International
+2,Austria,Western Europe,Tier 2 - Core Europe
+3,Bahrain,Middle East,Tier 3 - International
+4,Belgium,Western Europe,Tier 2 - Core Europe
+5,Brazil,Latin America,Tier 3 - International
+6,Canada,North America,Tier 3 - International
+7,Channel Islands,Other / Overseas,Tier 3 - International
+8,Cyprus,Southern Europe,Tier 2 - Core Europe
+9,Czech Republic,Eastern Europe,Tier 3 - Extended EU
+10,Denmark,Nordics,Tier 2 - Core Europe
+11,Eire,Western Europe,Tier 2 - Core Europe
+12,European Community,Eastern Europe,Tier 3 - Extended EU
+13,Finland,Nordics,Tier 2 - Core Europe
+14,France,Western Europe,Tier 2 - Core Europe
+15,Germany,Western Europe,Tier 2 - Core Europe
+16,Greece,Southern Europe,Tier 2 - Core Europe
+17,Hong Kong,Asia-Pacific,Tier 3 - International
+18,Iceland,Nordics,Tier 2 - Core Europe
+19,Israel,Middle East,Tier 3 - International
+20,Italy,Southern Europe,Tier 2 - Core Europe
+21,Japan,Asia-Pacific,Tier 3 - International
+22,Lebanon,Middle East,Tier 3 - International
+23,Lithuania,Eastern Europe,Tier 3 - Extended EU
+24,Malta,Southern Europe,Tier 2 - Core Europe
+25,Netherlands,Western Europe,Tier 2 - Core Europe
+26,Norway,Nordics,Tier 2 - Core Europe
+27,Poland,Eastern Europe,Tier 3 - Extended EU
+28,Portugal,Southern Europe,Tier 2 - Core Europe
+29,Rsa,Africa,Tier 3 - International
+30,Saudi Arabia,Middle East,Tier 3 - International
+31,Singapore,Asia-Pacific,Tier 3 - International
+32,Spain,Southern Europe,Tier 2 - Core Europe
+33,Sweden,Nordics,Tier 2 - Core Europe
+34,Switzerland,Western Europe,Tier 2 - Core Europe
+35,United Arab Emirates,Middle East,Tier 3 - International
+36,United Kingdom,Domestic UK,Tier 1 - Domestic
+37,Unspecified,Other / Overseas,Tier 3 - International
+38,Usa,North America,Tier 3 - International

@@ -1,0 +1,101 @@
+customer_key,customer_id,recency_days,frequency,monetary_total,r_score,f_score,m_score,rfm_score,customer_segment,loyalty_tier,last_order_date
+3,12347,2,7,4310.0,5,5,5,555,Champions,Bronze,2011-12-07
+4,12348,75,4,1797.24,2,4,4,244,At Risk - Needs Attention,Bronze,2011-09-25
+5,12349,19,1,1757.55,4,1,4,414,New / Potential Loyalists,Silver,2011-11-21
+6,12350,310,1,334.4,1,1,2,112,Lost Customers,Bronze,2011-02-02
+7,12352,36,8,2506.04,3,5,5,355,Loyal Customers,Bronze,2011-11-03
+8,12353,204,1,89.0,1,1,1,111,Lost Customers,Bronze,2011-05-19
+9,12354,232,1,1079.4,1,1,4,114,At Risk - Needs Attention,Platinum,2011-04-21
+10,12355,214,1,459.4,1,1,2,112,Lost Customers,Gold,2011-05-09
+11,12356,23,3,2811.43,4,3,5,435,Loyal Customers,Bronze,2011-11-17
+12,12357,33,1,6207.67,4,1,5,415,New / Potential Loyalists,Bronze,2011-11-06
+13,12358,2,2,1168.06,5,2,4,524,New / Potential Loyalists,Bronze,2011-12-08
+14,12359,58,4,6310.03,3,4,5,345,Loyal Customers,Silver,2011-10-13
+15,12360,52,3,2662.06,3,3,5,335,Loyal Customers,Bronze,2011-10-18
+16,12361,287,1,189.9,1,1,1,111,Lost Customers,Silver,2011-02-25
+17,12362,3,10,5226.23,5,5,5,555,Champions,Silver,2011-12-06
+18,12363,110,2,552.0,2,2,3,223,At Risk - Needs Attention,Gold,2011-08-22
+19,12364,8,4,1313.1,5,4,4,544,Champions,Bronze,2011-12-02
+20,12365,291,2,641.38,1,2,3,123,At Risk - Needs Attention,Gold,2011-02-21
+21,12367,4,1,168.9,5,1,1,511,New / Potential Loyalists,Gold,2011-12-05
+22,12370,51,4,3541.94,3,4,5,345,Loyal Customers,Bronze,2011-10-19
+23,12371,45,2,1887.96,3,2,4,324,Promising Customers,Bronze,2011-10-26
+24,12372,72,3,1298.04,3,3,4,334,Loyal Customers,Bronze,2011-09-29
+25,12373,311,1,364.6,1,1,2,112,Lost Customers,Bronze,2011-02-01
+26,12374,25,1,742.93,4,1,3,413,New / Potential Loyalists,Bronze,2011-11-14
+27,12375,11,2,457.5,5,2,2,522,New / Potential Loyalists,Silver,2011-11-29
+28,12377,315,2,1628.12,1,2,4,124,At Risk - Needs Attention,Bronze,2011-01-28
+29,12378,130,1,4008.62,2,1,5,215,At Risk - Needs Attention,Platinum,2011-08-02
+30,12379,82,2,852.24,2,2,3,223,At Risk - Needs Attention,Bronze,2011-09-19
+31,12380,22,4,2724.81,4,4,5,445,Champions,Platinum,2011-11-18
+32,12381,5,5,1845.31,5,4,4,544,Champions,Bronze,2011-12-05
+33,12383,185,5,1850.56,1,4,4,144,At Risk - Needs Attention,Gold,2011-06-08
+34,12384,29,2,585.27,4,2,3,423,New / Potential Loyalists,Bronze,2011-11-11
+35,12386,338,2,401.9,1,2,2,122,Lost Customers,Bronze,2011-01-06
+36,12388,16,6,2780.66,4,4,5,445,Champions,Gold,2011-11-24
+37,12390,80,1,549.84,2,1,3,213,At Risk - Needs Attention,Bronze,2011-09-21
+38,12391,22,1,439.66,4,1,2,412,New / Potential Loyalists,Silver,2011-11-18
+39,12393,72,4,1582.6,3,4,4,344,Loyal Customers,Silver,2011-09-28
+40,12394,64,2,1272.48,3,2,4,324,Promising Customers,Silver,2011-10-07
+41,12395,19,12,3018.63,4,5,5,455,Champions,Silver,2011-11-20
+42,12397,36,2,2409.9,3,2,5,325,Promising Customers,Silver,2011-11-04
+43,12398,46,1,1635.66,3,1,4,314,Promising Customers,Bronze,2011-10-25
+44,12399,119,4,1108.65,2,4,4,244,At Risk - Needs Attention,Silver,2011-08-12
+45,12401,303,1,84.3,1,1,1,111,Lost Customers,Gold,2011-02-09
+46,12402,323,1,225.6,1,1,1,111,Lost Customers,Bronze,2011-01-20
+47,12403,50,1,427.7,3,1,2,312,Promising Customers,Bronze,2011-10-21
+48,12405,149,1,1710.39,2,1,4,214,At Risk - Needs Attention,Silver,2011-07-14
+49,12406,22,2,3415.3,4,2,5,425,New / Potential Loyalists,Bronze,2011-11-17
+50,12407,50,5,1708.12,3,4,4,344,Loyal Customers,Bronze,2011-10-21
+51,12408,33,5,2888.55,4,4,5,445,Champions,Bronze,2011-11-07
+52,12409,79,3,11072.67,2,3,5,235,At Risk - Needs Attention,Silver,2011-09-22
+53,12410,309,2,693.33,1,2,3,123,At Risk - Needs Attention,Bronze,2011-02-04
+54,12412,75,3,1226.88,2,3,4,234,At Risk - Needs Attention,Silver,2011-09-26
+55,12413,67,3,758.1,3,3,3,333,Loyal Customers,Gold,2011-10-04
+56,12414,217,3,562.41,1,3,3,133,At Risk - Needs Attention,Bronze,2011-05-06
+57,12415,24,21,124914.53,4,5,5,455,Champions,Silver,2011-11-15
+58,12417,3,9,3649.1,5,5,5,555,Champions,Platinum,2011-12-06
+59,12418,113,1,668.58,2,1,3,213,At Risk - Needs Attention,Silver,2011-08-19
+60,12420,64,1,600.39,3,1,3,313,Promising Customers,Gold,2011-10-07
+61,12421,16,4,807.04,4,4,3,443,Loyal Customers,Bronze,2011-11-24
+62,12422,96,3,803.56,2,3,3,233,At Risk - Needs Attention,Gold,2011-09-05
+63,12423,1,8,1859.31,5,5,4,554,Champions,Bronze,2011-12-09
+64,12424,163,2,1760.96,2,2,4,224,At Risk - Needs Attention,Bronze,2011-06-30
+65,12425,78,1,777.2,2,1,3,213,At Risk - Needs Attention,Bronze,2011-09-22
+66,12426,195,1,582.73,1,1,3,113,At Risk - Needs Attention,Bronze,2011-05-29
+67,12427,22,3,825.8,4,3,3,433,Loyal Customers,Gold,2011-11-18
+68,12428,26,9,7956.46,4,5,5,455,Champions,Bronze,2011-11-14
+69,12429,9,4,3750.4,5,4,5,545,Champions,Silver,2011-11-30
+70,12430,43,1,256.4,3,1,2,312,Promising Customers,Silver,2011-10-27
+71,12431,36,15,6419.95,3,5,5,355,Loyal Customers,Silver,2011-11-04
+72,12432,43,5,5059.32,3,4,5,345,Loyal Customers,Bronze,2011-10-28
+73,12433,1,7,13375.87,5,5,5,555,Champions,Silver,2011-12-09
+74,12434,85,2,806.14,2,2,3,223,At Risk - Needs Attention,Bronze,2011-09-16
+75,12435,80,2,7829.89,2,2,5,225,At Risk - Needs Attention,Bronze,2011-09-21
+76,12436,100,1,509.01,2,1,3,213,At Risk - Needs Attention,Platinum,2011-09-01
+77,12437,2,18,4951.41,5,5,5,555,Champions,Bronze,2011-12-08
+78,12438,14,2,2906.85,5,2,5,525,New / Potential Loyalists,Bronze,2011-11-25
+79,12441,367,1,173.55,1,1,1,111,Lost Customers,Gold,2010-12-08
+80,12442,3,1,172.06,5,1,1,511,New / Potential Loyalists,Bronze,2011-12-06
+81,12444,21,5,5005.46,4,4,5,445,Champions,Silver,2011-11-18
+82,12445,22,1,133.4,4,1,1,411,New / Potential Loyalists,Bronze,2011-11-17
+83,12446,58,1,1002.31,3,1,4,314,Promising Customers,Bronze,2011-10-13
+84,12447,243,1,476.49,1,1,2,112,Lost Customers,Bronze,2011-04-10
+85,12448,44,1,449.45,3,1,2,312,Promising Customers,Bronze,2011-10-26
+86,12449,22,4,4067.29,4,4,5,445,Champions,Bronze,2011-11-17
+87,12450,156,2,197.88,2,2,1,221,Hibernating,Silver,2011-07-06
+88,12451,11,5,9035.52,5,4,5,545,Champions,Silver,2011-11-29
+89,12452,17,2,430.57,4,2,2,422,New / Potential Loyalists,Platinum,2011-11-23
+90,12453,134,1,707.09,2,1,3,213,At Risk - Needs Attention,Bronze,2011-07-28
+91,12454,56,1,3528.34,3,1,5,315,Promising Customers,Silver,2011-10-14
+92,12455,73,6,2466.86,2,4,5,245,At Risk - Needs Attention,Silver,2011-09-27
+93,12456,44,3,3181.04,3,3,5,335,Loyal Customers,Gold,2011-10-26
+94,12457,66,7,2363.23,3,5,5,355,Loyal Customers,Bronze,2011-10-04
+95,12458,71,2,947.4,3,2,4,324,Promising Customers,Silver,2011-09-29
+96,12461,94,2,826.88,2,2,3,223,At Risk - Needs Attention,Gold,2011-09-06
+97,12462,19,2,1189.59,4,2,4,424,New / Potential Loyalists,Bronze,2011-11-21
+98,12463,53,4,1344.78,3,4,4,344,Loyal Customers,Gold,2011-10-17
+99,12464,10,8,1212.05,5,5,4,554,Champions,Bronze,2011-11-29
+100,12465,17,2,742.19,4,2,3,423,New / Potential Loyalists,Silver,2011-11-22
+101,12468,188,2,729.54,1,2,3,123,At Risk - Needs Attention,Platinum,2011-06-05
+102,12471,2,30,19788.65,5,5,5,555,Champions,Silver,2011-12-07
