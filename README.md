@@ -1,143 +1,125 @@
-# 🛍️ RetailIQ: E-Commerce Sales Analytics & Customer Churn Platform
-**Course:** Data Engineering and MLOps | **Phase 1: Data Pipeline Implementation**
+# 🛍️ RetailIQ: E-Commerce Sales Analytics & Customer Churn MLOps Platform
+**Course:** Data Engineering and MLOps | **Full End-to-End Platform (Phase 1 & Phase 2)**
 
 ---
 
 ## 📌 Executive Overview
 
-RetailIQ is an end-to-end enterprise data engineering and business intelligence platform built on transactional retail records from the **UCI Online Retail dataset** (541,909 transactions across 38 global markets).
+RetailIQ is an enterprise-grade data engineering, predictive machine learning, and MLOps analytics platform built on real-world transactional records from the **UCI Online Retail dataset** (541,909 raw records across 38 global markets).
 
-Phase 1 establishes the foundational data infrastructure:
-1. **Automated Data Ingestion & Batch Partitioning**: Ingests raw multi-sheet extracts, partitions historical data into 13 monthly incremental batches, and generates synthetic customer demographic master records.
-2. **Data Quality & Quarantine Framework**: Enforces business validation rules (price sanity, quantity bounds, cancellation detection, duplicate prevention) and logs rejected records with explicit error reason codes.
-3. **Star Schema Data Warehouse**: Implements a dimensional schema (`dim_customer`, `dim_product`, `dim_geography`, `dim_date`, `fact_sales`, `fact_customer_retention`) compatible with PostgreSQL and SQLite.
-4. **Analytical Data Marts**: Calculates pre-aggregated marts for multi-dimensional Sales Performance and Customer RFM (Recency, Frequency, Monetary) Segmentation.
-5. **Orchestration**: Features a production **Apache Airflow DAG** (`dags/retail_etl_dag.py`) and a standalone CLI orchestrator (`run_pipeline.py`).
-6. **Interactive Business Intelligence Web App**: A **Streamlit** dashboard delivering 6 executive views (Sales Trends, Pareto Catalog Analysis, RFM 3D Clusters, Global Geography, Cohort Retention, and Data Quality Monitoring).
+### Phase 1: Data Engineering & Data Warehouse Infrastructure
+1. **Automated Ingestion & Batch Partitioning**: Ingests multi-sheet extracts, partitions historical data into 13 monthly incremental batches, and enriches data with synthetic customer demographic master records.
+2. **Data Quality & Quarantine Framework**: Enforces business validation rules (price sanity, quantity bounds, cancellation detection, duplicate prevention) and logs rejected records with explicit error reason codes (**99.53% validation pass rate**).
+3. **Star Schema Data Warehouse**: Implements a dimensional schema (`dim_customer`, `dim_product`, `dim_geography`, `dim_date`, `fact_sales`, `fact_customer_retention`) supporting both PostgreSQL and SQLite.
+4. **Analytical Data Marts**: Computes pre-aggregated data marts for Sales Performance and Customer RFM (Recency, Frequency, Monetary) Segmentation.
+5. **Orchestration**: Production **Apache Airflow DAG** (`dags/retail_etl_dag.py`) and standalone CLI runner (`run_pipeline.py`).
+
+### Phase 2: MLOps Extension & Customer Churn Prediction Engine
+1. **Temporal Feature Engineering (Zero Data Leakage)**: Computes 14 behavioral and demographic customer features over a **180-day observation window** and evaluates binary churn labels over a subsequent **90-day inactivity target window**.
+2. **Model Training & Experiment Tracking**: Benchmarks **Logistic Regression**, **Random Forest**, and **Gradient Boosting** classifiers tracked via **MLflow** (`sqlite:///mlruns.db`). Winning model (**Gradient Boosting**: ROC-AUC 0.6950, F1 0.5628) serialized and registered as `EcommerceChurnPredictor`.
+3. **Production FastAPI Microservice**: Exposes high-throughput REST endpoints (`/health`, `/model_info`, `/predict`, `/batch_predict`) for real-time customer churn scoring and automated retention playbooks.
+4. **Feature & Data Drift Monitoring**: Implements **Population Stability Index (PSI)** and **Two-Sample Kolmogorov-Smirnov (KS)** statistical tests to audit feature drift and alert on model degradation.
+5. **Interactive Streamlit UI (8 Analytical Tabs)**: Includes real-time Churn Predictor Portal (Tab 7) and MLOps Registry & Feature Drift Monitor (Tab 8).
+6. **Docker Multi-Container Deployment**: Fully containerized using **Docker Compose** (`postgres`, `fastapi_service`, `streamlit_dashboard`).
 
 ---
 
-## 📦 Part 1 Submission Deliverables Package
+## 📦 Project Deliverables Package
 
-| Item | Deliverable Description | Repository File Location |
+| Deliverable | Description | Repository File Location |
 | :---: | :--- | :--- |
-| **1** | Source Code and ETL Scripts | [`src/`](file://src/) & [`run_pipeline.py`](file://run_pipeline.py) |
-| **2** | Airflow DAG & Orchestration Workflow | [`dags/retail_etl_dag.py`](file://dags/retail_etl_dag.py) |
-| **3** | Database Schema & Sample Populated Tables | [`src/database/schema.sql`](file://src/database/schema.sql), [`sql/sample_queries.sql`](file://sql/sample_queries.sql), and [`data/exports/`](file://data/exports/) |
-| **4** | Dataset Source Information & Access Instructions | [`docs/dataset_source_info.md`](file://docs/dataset_source_info.md) |
-| **5** | Architecture Diagram & Pipeline Flow | [`docs/architecture_diagram.md`](file://docs/architecture_diagram.md) |
-| **6** | Data Dictionary & Validation Rules | [`docs/data_dictionary.md`](file://docs/data_dictionary.md) |
-| **7** | Streamlit Interactive Application | [`app/streamlit_app.py`](file://app/streamlit_app.py) & [`app/style.css`](file://app/style.css) |
-| **8** | Comprehensive Project Report (8–10 Pages) | [`docs/PROJECT_PART1_REPORT.md`](file://docs/PROJECT_PART1_REPORT.md) |
-| **9** | Execution Evidence & Audit Logs | [`data/logs/pipeline_execution.log`](file://data/logs/pipeline_execution.log) & [`data/logs/ingestion_audit_log.json`](file://data/logs/ingestion_audit_log.json) |
-| **10** | README with Setup & Run Instructions | [`README.md`](file://README.md) (this document) |
+| **ETL & Data Pipeline** | Ingestion, Quality Checks, Star Schema ETL | [`src/etl/`](file://src/etl/) & [`run_pipeline.py`](file://run_pipeline.py) |
+| **Airflow Workflow** | Scheduled Airflow DAG Pipeline | [`dags/retail_etl_dag.py`](file://dags/retail_etl_dag.py) |
+| **Data Warehouse** | PostgreSQL/SQLite Star Schema SQL | [`src/database/schema.sql`](file://src/database/schema.sql) |
+| **ML Feature Pipeline** | Temporal Observation Feature Store | [`src/ml/feature_engineering.py`](file://src/ml/feature_engineering.py) |
+| **ML Training & MLflow** | Model Benchmarking & MLflow Logger | [`src/ml/train.py`](file://src/ml/train.py) & [`src/ml/mlflow_tracker.py`](file://src/ml/mlflow_tracker.py) |
+| **Drift Monitoring Engine** | PSI & KS-Test Drift Evaluator | [`src/ml/drift_monitor.py`](file://src/ml/drift_monitor.py) |
+| **FastAPI Microservice** | Production REST Inference Endpoints | [`api/main.py`](file://api/main.py) & [`api/schemas.py`](file://api/schemas.py) |
+| **Streamlit Dashboard** | 8 Interactive Analytics & MLOps Tabs | [`app/streamlit_app.py`](file://app/streamlit_app.py) |
+| **Test Suite** | Unit & Integration Automated Tests (13/13 Pass) | [`tests/test_pipeline.py`](file://tests/test_pipeline.py) & [`tests/test_ml_pipeline.py`](file://tests/test_ml_pipeline.py) |
+| **Phase 1 Report** | Part 1 Comprehensive Report | [`docs/PROJECT_PART1_REPORT.md`](file://docs/PROJECT_PART1_REPORT.md) |
+| **Phase 2 Report** | Part 2 Comprehensive MLOps Report | [`docs/PROJECT_PART2_REPORT.md`](file://docs/PROJECT_PART2_REPORT.md) |
 
 ---
 
 ## 🚀 Quickstart Guide
 
-### 1. Prerequisites
-- Python 3.10+ (or Python 3.11)
-- Virtual environment with dependencies:
-  ```bash
-  source .venv/bin/activate
-  pip install -r requirements.txt
-  ```
-
-### 2. Execute the Complete Pipeline End-to-End
-Run the standalone pipeline orchestrator to fetch the dataset, run quality checks, build the star schema, compute analytical marts, and export table snapshots:
+### 1. Prerequisites & Environment Setup
 ```bash
+# Clone repository & create virtual environment
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+### 2. Execute Data Pipeline & Train ML Models
+```bash
+# Full pipeline execution: ETL -> Star Schema -> Marts -> ML Model Training & Artifact Logging
 python run_pipeline.py --mode full
 ```
 
-To run in **incremental batch mode** (processing monthly order batches):
+### 3. Launch FastAPI Microservice
 ```bash
-python run_pipeline.py --mode incremental
+# Starts FastAPI server on http://localhost:8000 (Swagger docs at http://localhost:8000/docs)
+python -m uvicorn api.main:app --port 8000 --host 0.0.0.0
 ```
 
-### 3. Launch the Interactive Streamlit Dashboard
-Launch the dashboard on `http://localhost:8501`:
+### 4. Launch Streamlit BI & MLOps Dashboard
 ```bash
+# Starts Streamlit app on http://localhost:8501
 streamlit run app/streamlit_app.py
 ```
 
-### 4. Run Automated Test Suite
-Execute the pytest suite covering schema integrity, quality validation, deduplication, and RFM scoring:
+### 5. Run Complete Automated Test Suite
 ```bash
-pytest tests/test_pipeline.py -v
+# Executes 13 unit & integration tests across DE & MLOps pipelines
+pytest tests/ -v
 ```
 
 ---
 
-## 🏛️ Data Warehouse Architecture
+## 🤖 MLOps Model Benchmark & Performance Summary
 
-### Star Schema Entity Relationship
-```
-               +--------------------+
-               |      dim_date      |
-               +--------------------+
-                         | (date_key)
-                         v
-+--------------------+ +--------------------+ +--------------------+
-|    dim_customer    | |     fact_sales     | |    dim_product     |
-+--------------------+ +--------------------+ +--------------------+
-| customer_key (PK)  | | sales_key (PK)     | | product_key (PK)   |
-| customer_id (UK)   |-| customer_key (FK)  | | stock_code (UK)    |
-| gender             | | product_key (FK)   |-| description        |
-| age_group          | | geography_key (FK) | | category           |
-| loyalty_tier       | | date_key (FK)      | | unit_price_nominal |
-+--------------------+ | invoice_no         | +--------------------+
-         |             | quantity           |
-         |             | unit_price         |
-         |             | total_amount       |
-         |             | is_cancelled       |
-         |             +--------------------+
-         |                       ^
-         |                       | (geography_key)
-         |             +--------------------+
-         |             |   dim_geography    |
-         |             +--------------------+
-         |             | geography_key (PK) |
-         |             | country_name (UK)  |
-         |             | region             |
-         |             | market_tier        |
-         |             +--------------------+
-         v
-+-----------------------------+
-|   fact_customer_retention   |
-+-----------------------------+
-| retention_key (PK)          |
-| customer_key (FK)           |
-| cohort_month                |
-| order_sequence              |
-| days_since_prior_order      |
-| order_value                 |
-| is_repeat_customer          |
-+-----------------------------+
-```
+Three algorithms were benchmarked on a stratified test set ($N=2,786$ customers):
 
-### Analytical Data Marts
-- **`mart_sales_performance`**: Pre-aggregated revenue, distinct order count, total units sold, AOV, and unique customer reach by month and country.
-- **`mart_customer_rfm`**: Quintile scoring (1-5) for Recency, Frequency, and Monetary attributes with customer persona classification (`Champions`, `Loyal Customers`, `At Risk`, `Hibernating`, `Lost`).
+| Algorithm | Accuracy | Precision | Recall | F1-Score | ROC-AUC | Log-Loss | Status |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Logistic Regression** | 0.6388 | 0.6486 | 0.4571 | 0.5363 | 0.6727 | 0.6387 | Baseline |
+| **Random Forest** | 0.6411 | 0.6515 | 0.4649 | 0.5425 | 0.6865 | 0.6321 | Benchmark |
+| **Gradient Boosting** | **0.6531** | **0.6682** | **0.4862** | **0.5628** | **0.6950** | **0.6245** | **WINNER (Registered)** |
 
 ---
 
-## 🛡️ Data Quality Framework & Validation Summary
+## 🔌 FastAPI Microservice Endpoints
 
-Execution metrics from the baseline pipeline run:
-- **Total Raw Ingested Records**: 541,909
-- **Cleaned Valid Records**: 539,388 (**99.53% Pass Rate**)
-- **Quarantined Records**: 2,521 rows quarantined to `data/rejected/rejected_records.csv`
-  - Zero / Invalid Unit Price (`INVALID_OR_ZERO_UNIT_PRICE`): 2,515 rows (administrative adjustments)
-  - Zero Quantity (`INVALID_OR_ZERO_QUANTITY`): 6 rows
-- **Exact Duplicates Cleaned**: 5,265 duplicate transaction rows eliminated.
+| Endpoint | Method | Description | Example Request |
+| :--- | :---: | :--- | :--- |
+| `GET /health` | `GET` | Health check & model status | `curl http://localhost:8000/health` |
+| `GET /model_info` | `GET` | Production model metadata | `curl http://localhost:8000/model_info` |
+| `POST /predict` | `POST` | Single customer churn prediction | `{"recency_days": 120.0, "frequency_orders": 2, ...}` |
+| `POST /batch_predict` | `POST` | Bulk customer predictions | `{"customers": [{...}, {...}]}` |
 
 ---
 
-## 🐳 Docker Deployment (Optional)
+## 📊 Streamlit Interactive Dashboard Tabs
 
-To spin up a dedicated PostgreSQL database container along with the Streamlit service:
+- **Tab 1: Executive KPI Overview**: Revenue, Order Velocity, Customer Growth, and Monthly Sales Trends.
+- **Tab 2: Product & Category Intelligence**: Pareto Analysis (80/20 Rule) and Top Selling SKUs.
+- **Tab 3: Customer RFM Segmentation**: 3D Scatter plots and RFM Persona distribution.
+- **Tab 4: Geographic Sales Map**: Global revenue maps and market tier breakdown.
+- **Tab 5: Cohort Retention Analysis**: Monthly retention matrices and customer heatmaps.
+- **Tab 6: Data Quality & Audit Logs**: Real-time ETL audit logs and quarantine reason breakdown.
+- **Tab 7: Real-Time Churn Predictor Portal**: Interactive single-customer form and batch CSV scoring.
+- **Tab 8: MLOps Registry & Feature Drift Monitor**: MLflow run logs, ROC curves, and live PSI feature drift auditor.
+
+---
+
+## 🐳 Docker Multi-Container Orchestration
+
+To run the entire system in isolated Docker containers:
 ```bash
-docker-compose up -d
+docker-compose up -d --build
 ```
-The database will automatically initialize using `src/database/schema.sql`.
+This launches:
+- `ecommerce_postgres`: PostgreSQL DW on port `5432`
+- `ecommerce_fastapi_api`: FastAPI microservice on port `8000`
+- `ecommerce_streamlit_app`: Streamlit UI on port `8501`

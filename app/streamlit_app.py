@@ -2,6 +2,7 @@
 
 import os
 import sys
+import json
 from pathlib import Path
 import pandas as pd
 import numpy as np
@@ -14,13 +15,13 @@ ROOT_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT_DIR))
 
 from src.database.connection import execute_query, get_active_db_type
-from src.config import PIPELINE_LOG_PATH, AUDIT_LOG_PATH, REJECTED_RECORDS_PATH
+from src.config import PIPELINE_LOG_PATH, AUDIT_LOG_PATH, REJECTED_RECORDS_PATH, BASE_DIR
 
 # -----------------------------------------------------------------------------
 # Streamlit App Configuration & Styling
 # -----------------------------------------------------------------------------
 st.set_page_config(
-    page_title="RetailIQ | E-Commerce Sales Analytics & Customer Mart",
+    page_title="RetailIQ | E-Commerce Sales Analytics & MLOps Churn Platform",
     page_icon="🛍️",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -143,27 +144,22 @@ with st.sidebar:
     st.markdown(f"**Warehouse Engine:** `{active_db}`")
     st.markdown("---")
 
-    # Country filter
     all_countries = ["All Markets"] + sorted(df_sales["country_name"].unique().tolist())
     selected_country = st.selectbox("🌐 Market Geography", all_countries, index=0)
 
-    # Date Range Filter
     min_date = pd.to_datetime(df_sales["full_date"]).min().date()
     max_date = pd.to_datetime(df_sales["full_date"]).max().date()
     date_range = st.date_input("📅 Date Range Filter", value=(min_date, max_date), min_value=min_date, max_value=max_date)
 
-    # Category Filter
     all_cats = ["All Categories"] + sorted(df_products["category"].unique().tolist())
     selected_cat = st.selectbox("📦 Merchandise Category", all_cats, index=0)
 
-    # Customer Loyalty Filter
     all_tiers = ["All Loyalty Tiers"] + sorted(df_rfm["loyalty_tier"].dropna().unique().tolist())
     selected_tier = st.selectbox("🎖️ Customer Loyalty Tier", all_tiers, index=0)
 
     st.markdown("---")
-    st.caption("E-Commerce Sales Analytics & MLOps | Assignment Part 1")
+    st.caption("E-Commerce Sales Analytics & MLOps | Assignment Part 2")
 
-# Apply Filters to Sales Mart
 filtered_sales = df_sales.copy()
 if selected_country != "All Markets":
     filtered_sales = filtered_sales[filtered_sales["country_name"] == selected_country]
@@ -175,12 +171,10 @@ if len(date_range) == 2:
         (pd.to_datetime(filtered_sales["full_date"]).dt.date <= end_d)
     ]
 
-# Apply Filters to Products
 filtered_products = df_products.copy()
 if selected_cat != "All Categories":
     filtered_products = filtered_products[filtered_products["category"] == selected_cat]
 
-# Apply Filters to RFM
 filtered_rfm = df_rfm.copy()
 if selected_tier != "All Loyalty Tiers":
     filtered_rfm = filtered_rfm[filtered_rfm["loyalty_tier"] == selected_tier]
@@ -193,30 +187,30 @@ if selected_country != "All Markets":
 st.markdown(
     f"""
     <div class="hero-banner">
-        <div class="hero-title">RetailIQ: E-Commerce Sales Analytics Platform</div>
+        <div class="hero-title">RetailIQ: E-Commerce Sales Analytics & MLOps Churn Platform</div>
         <p class="hero-subtitle">
             <span class="badge-tag">Star Schema DW</span>
             <span class="badge-tag">Database: {active_db}</span>
-            <span class="badge-tag">Total Pipeline Rows: {len(df_sales):,}</span>
-            <span class="badge-tag">Quality Status: Verified 99.53% Pass Rate</span>
+            <span class="badge-tag">API: FastAPI Port 8000</span>
+            <span class="badge-tag">Winning Model: Gradient Boosting (ROC-AUC 0.695)</span>
         </p>
     </div>
     """,
     unsafe_allow_html=True
 )
 
-tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
+tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8 = st.tabs([
     "📊 Executive Revenue Trends",
     "🛍️ Products & Category Pareto",
     "👥 Customer RFM Segmentation",
     "🌍 Geographic Intelligence",
     "🔄 Retention & Cohorts",
-    "🛡️ Data Quality & Audit Health"
+    "🛡️ Data Quality & Audit",
+    "🔮 Churn Predictor Portal",
+    "📈 MLOps & Drift Monitor"
 ])
 
-# -----------------------------------------------------------------------------
 # TAB 1: EXECUTIVE REVENUE & ORDER TRENDS
-# -----------------------------------------------------------------------------
 with tab1:
     st.markdown("### 📊 Executive KPI Performance")
     
@@ -275,7 +269,6 @@ with tab1:
 
     st.markdown("<br>", unsafe_allow_html=True)
     
-    # Revenue Trends Time Series
     monthly_trend = filtered_sales.groupby("year_month").agg(
         revenue=("total_revenue", "sum"),
         orders=("total_orders", "sum"),
@@ -296,7 +289,7 @@ with tab1:
         ))
         fig_rev.add_trace(go.Scatter(
             x=monthly_trend["year_month"],
-            y=monthly_trend["orders"] * 100, # scaled for secondary visual
+            y=monthly_trend["orders"] * 100,
             name="Orders Trend (Scaled x100)",
             mode="lines+markers",
             line=dict(color="#10b981", width=3)
@@ -333,9 +326,7 @@ with tab1:
         )
         st.plotly_chart(fig_dow, use_container_width=True)
 
-# -----------------------------------------------------------------------------
-# TAB 2: PRODUCTS & CATEGORIES (PARETO 80/20)
-# -----------------------------------------------------------------------------
+# TAB 2: PRODUCTS & CATEGORIES
 with tab2:
     st.markdown("### 🛍️ Product Catalog & Category Performance")
 
@@ -392,7 +383,6 @@ with tab2:
         line=dict(color="#ec4899", width=3),
         name="Cumulative Revenue %"
     ))
-    # 80/20 reference lines
     fig_pareto.add_hline(y=80, line_dash="dash", line_color="#10b981", annotation_text="80% Revenue Threshold")
     fig_pareto.add_vline(x=20, line_dash="dash", line_color="#60a5fa", annotation_text="20% Product SKUs")
 
@@ -405,9 +395,7 @@ with tab2:
     )
     st.plotly_chart(fig_pareto, use_container_width=True)
 
-# -----------------------------------------------------------------------------
 # TAB 3: CUSTOMER RFM SEGMENTATION
-# -----------------------------------------------------------------------------
 with tab3:
     st.markdown("### 👥 Customer RFM (Recency, Frequency, Monetary) Segmentation")
 
@@ -455,7 +443,6 @@ with tab3:
         st.plotly_chart(fig_head, use_container_width=True)
 
     st.markdown("#### 🌌 3D RFM Behavioral Space (Recency vs. Frequency vs. Monetary)")
-    # Sample 1500 customers for smooth 3D rendering
     sample_rfm = filtered_rfm.sample(min(1500, len(filtered_rfm)), random_state=42)
     fig_3d = px.scatter_3d(
         sample_rfm,
@@ -476,7 +463,6 @@ with tab3:
     )
     st.plotly_chart(fig_3d, use_container_width=True)
 
-    # Demographics matrix
     st.markdown("#### 🧬 Customer Demographics Matrix (Loyalty Tiers & Age Groups)")
     col_d1, col_d2 = st.columns(2)
     with col_d1:
@@ -504,9 +490,7 @@ with tab3:
         fig_dev.update_layout(template="plotly_dark", showlegend=False, height=320, margin=dict(l=20, r=20, t=20, b=20))
         st.plotly_chart(fig_dev, use_container_width=True)
 
-# -----------------------------------------------------------------------------
 # TAB 4: GEOGRAPHIC INTELLIGENCE
-# -----------------------------------------------------------------------------
 with tab4:
     st.markdown("### 🌍 Geographic & Global Market Analysis")
 
@@ -557,9 +541,7 @@ with tab4:
         )
         st.plotly_chart(fig_non_uk, use_container_width=True)
 
-# -----------------------------------------------------------------------------
-# TAB 5: RETENTION & COHORT ANALYSIS
-# -----------------------------------------------------------------------------
+# TAB 5: RETENTION & COHORTS
 with tab5:
     st.markdown("### 🔄 Customer Retention & Repeat Purchase Analytics")
 
@@ -610,9 +592,7 @@ with tab5:
     fig_cohort.update_layout(template="plotly_dark", height=320, margin=dict(l=20, r=20, t=20, b=20))
     st.plotly_chart(fig_cohort, use_container_width=True)
 
-# -----------------------------------------------------------------------------
-# TAB 6: DATA QUALITY & PIPELINE HEALTH MONITOR
-# -----------------------------------------------------------------------------
+# TAB 6: DATA QUALITY & PIPELINE AUDIT
 with tab6:
     st.markdown("### 🛡️ Data Engineering Quality & Pipeline Audit")
 
@@ -683,3 +663,199 @@ with tab6:
         UNION ALL SELECT 'mart_customer_rfm', count(*) FROM mart_customer_rfm
     """)
     st.dataframe(table_stats, use_container_width=True)
+
+# TAB 7: CHURN PREDICTOR & INFERENCE PORTAL
+with tab7:
+    st.markdown("### 🔮 Real-Time Customer Churn Scoring Portal")
+    st.markdown("Evaluate single customer profiles or query the production FastAPI model service.")
+
+    col_inf1, col_inf2 = st.columns([2, 3])
+
+    with col_inf1:
+        st.markdown("#### 📝 Customer Feature Input Form")
+        with st.form("churn_prediction_form"):
+            in_cust_id = st.number_input("Customer ID", min_value=10000, max_value=25000, value=17850)
+            in_recency = st.slider("Recency (Days Since Last Order)", min_value=0, max_value=365, value=120)
+            in_freq = st.number_input("Frequency (Total Orders)", min_value=1, max_value=100, value=2)
+            in_monetary = st.number_input("Monetary Spend (£)", min_value=0.0, max_value=50000.0, value=150.0)
+            in_aov = st.number_input("Average Order Value (£)", min_value=0.0, max_value=5000.0, value=75.0)
+            in_units = st.number_input("Total Quantity Units", min_value=1, max_value=10000, value=45)
+            in_cancellation = st.slider("Cancellation Rate", min_value=0.0, max_value=1.0, value=0.05)
+            in_latency = st.slider("Mean Days Between Orders", min_value=1, max_value=180, value=40)
+            in_tier = st.selectbox("Loyalty Tier", ["Bronze", "Silver", "Gold", "Platinum"], index=0)
+            in_country = st.selectbox("Country", ["United Kingdom", "Germany", "France", "Eire"], index=0)
+
+            submit_btn = st.form_submit_button("⚡ Score Churn Risk")
+
+    with col_inf2:
+        st.markdown("#### 🎯 Prediction Results & Risk Assessment")
+        if submit_btn:
+            try:
+                import requests
+                api_base = os.getenv("API_URL", "http://localhost:8000")
+                api_url = f"{api_base}/predict"
+                payload = {
+                    "customer_id": int(in_cust_id),
+                    "recency_days": float(in_recency),
+                    "frequency_orders": float(in_freq),
+                    "monetary_spend": float(in_monetary),
+                    "avg_order_value": float(in_aov),
+                    "total_units": float(in_units),
+                    "cancellation_rate": float(in_cancellation),
+                    "inter_purchase_mean": float(in_latency),
+                    "inter_purchase_std": 10.0,
+                    "product_variety": 5.0,
+                    "gender": "Female",
+                    "age_group": "36-50",
+                    "loyalty_tier": in_tier,
+                    "preferred_device": "Mobile App",
+                    "country": in_country
+                }
+                res = requests.post(api_url, json=payload, timeout=5)
+                if res.status_code == 200:
+                    data = res.json()
+                    prob = data["churn_probability"]
+                    risk = data["risk_level"]
+                    rec = data["recommendation"]
+
+                    st.markdown(
+                        f"""
+                        <div class="kpi-card" style="border-left: 6px solid {'#ef4444' if prob>=0.7 else ('#f59e0b' if prob>=0.4 else '#10b981')};">
+                            <div class="kpi-title">Predicted Churn Probability</div>
+                            <div class="kpi-value">{prob * 100:.1f}%</div>
+                            <div class="kpi-subtext" style="color: {'#ef4444' if prob>=0.7 else ('#f59e0b' if prob>=0.4 else '#10b981')}; font-size: 16px; font-weight: 700;">
+                                {risk.upper()}
+                            </div>
+                        </div>
+                        """,
+                        unsafe_allow_html=True
+                    )
+                    st.markdown("<br>", unsafe_allow_html=True)
+                    st.info(f"💡 **Strategic Retention Recommendation:**\n{rec}")
+
+                    fig_gauge = go.Figure(go.Indicator(
+                        mode="gauge+number",
+                        value=prob * 100,
+                        title={'text': "Churn Probability (%)"},
+                        gauge={
+                            'axis': {'range': [0, 100]},
+                            'bar': {'color': "#ef4444" if prob>=0.7 else ("#f59e0b" if prob>=0.4 else "#10b981")},
+                            'steps': [
+                                {'range': [0, 40], 'color': "rgba(16, 185, 129, 0.2)"},
+                                {'range': [40, 70], 'color': "rgba(245, 158, 11, 0.2)"},
+                                {'range': [70, 100], 'color': "rgba(239, 68, 68, 0.2)"}
+                            ],
+                        }
+                    ))
+                    fig_gauge.update_layout(template="plotly_dark", height=280, margin=dict(l=20, r=20, t=40, b=20))
+                    st.plotly_chart(fig_gauge, use_container_width=True)
+
+                else:
+                    st.error(f"API Error ({res.status_code}): {res.text}")
+            except Exception as err:
+                st.warning(f"Could not connect to FastAPI server on port 8000 ({err}). Scoring with direct local model fallback...")
+                from api.main import predict_single_customer
+                from api.schemas import CustomerFeaturesInput
+                item = CustomerFeaturesInput(
+                    customer_id=int(in_cust_id),
+                    recency_days=float(in_recency),
+                    frequency_orders=float(in_freq),
+                    monetary_spend=float(in_monetary),
+                    avg_order_value=float(in_aov),
+                    total_units=float(in_units),
+                    cancellation_rate=float(in_cancellation),
+                    inter_purchase_mean=float(in_latency),
+                    loyalty_tier=in_tier,
+                    country=in_country
+                )
+                pred_res = predict_single_customer(item)
+                st.success(f"Local Model Score: {pred_res.churn_probability * 100:.1f}% Churn Probability ({pred_res.risk_level})")
+                st.info(f"💡 Recommendation: {pred_res.recommendation}")
+        else:
+            st.info("Submit the feature input form on the left to compute real-time churn risk.")
+
+# TAB 8: MLOPS EXPERIMENTS & DRIFT MONITOR
+with tab8:
+    st.markdown("### 📈 MLOps Model Registry, MLflow Runs & Drift Monitor")
+
+    comp_path = BASE_DIR / "models" / "model_comparison.json"
+    if comp_path.exists():
+        with open(comp_path, "r", encoding="utf-8") as f:
+            comp_data = json.load(f)
+
+        st.markdown(f"#### 🏆 Model Registry Status: Active Model -> `{comp_data.get('winning_model', 'Gradient_Boosting')}`")
+
+        col_m1, col_m2, col_m3 = st.columns(3)
+        with col_m1:
+            st.markdown(
+                f"""<div class="kpi-card">
+                    <div class="kpi-title">Winning Classifier</div>
+                    <div class="kpi-value">{comp_data.get('winning_model')}</div>
+                    <div class="kpi-subtext">Registered Version 1.0</div>
+                </div>""",
+                unsafe_allow_html=True
+            )
+        with col_m2:
+            best_auc = comp_data['comparison'][comp_data['winning_model']]['metrics']['roc_auc']
+            st.markdown(
+                f"""<div class="kpi-card">
+                    <div class="kpi-title">Test ROC-AUC Score</div>
+                    <div class="kpi-value">{best_auc:.4f}</div>
+                    <div class="kpi-subtext">Evaluated on Holdout Test Set</div>
+                </div>""",
+                unsafe_allow_html=True
+            )
+        with col_m3:
+            best_f1 = comp_data['comparison'][comp_data['winning_model']]['metrics']['f1_score']
+            st.markdown(
+                f"""<div class="kpi-card">
+                    <div class="kpi-title">Test F1 Score</div>
+                    <div class="kpi-value">{best_f1:.4f}</div>
+                    <div class="kpi-subtext">Harmonic Mean Precision/Recall</div>
+                </div>""",
+                unsafe_allow_html=True
+            )
+
+        st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown("#### 📊 Classifier Benchmark Comparison")
+        comp_rows = []
+        for name, info in comp_data["comparison"].items():
+            row = {"Model": name}
+            row.update(info["metrics"])
+            comp_rows.append(row)
+        st.dataframe(pd.DataFrame(comp_rows), use_container_width=True)
+
+        st.markdown("#### 🖼️ Model Diagnostic Artifacts (Confusion Matrix & ROC Curve)")
+        col_img1, col_img2 = st.columns(2)
+        win_name_clean = comp_data['winning_model'].lower()
+        cm_file = BASE_DIR / "models" / f"{win_name_clean}_cm.png"
+        roc_file = BASE_DIR / "models" / f"{win_name_clean}_roc.png"
+
+        with col_img1:
+            if cm_file.exists():
+                st.image(str(cm_file), caption=f"Confusion Matrix - {comp_data['winning_model']}")
+        with col_img2:
+            if roc_file.exists():
+                st.image(str(roc_file), caption=f"ROC Curve - {comp_data['winning_model']}")
+
+    # Feature Drift Section
+    st.markdown("---")
+    st.markdown("#### 🔬 Feature & Data Drift Audit (PSI & Kolmogorov-Smirnov Test)")
+    try:
+        from src.ml.drift_monitor import calculate_feature_drift
+        from src.ml.feature_engineering import extract_customer_features
+        X_all, _, _ = extract_customer_features()
+        
+        baseline_sample = X_all.sample(frac=0.6, random_state=42)
+        current_sample = X_all.drop(baseline_sample.index)
+
+        drift_df = calculate_feature_drift(baseline_sample, current_sample)
+        st.dataframe(drift_df, use_container_width=True)
+        
+        high_drift = len(drift_df[drift_df["alert_level"].str.contains("HIGH")])
+        if high_drift == 0:
+            st.success("✅ **Feature Drift Status: STABLE**. No significant feature distribution drift detected.")
+        else:
+            st.warning(f"⚠️ **Feature Drift Status: DRIFT DETECTED** ({high_drift} features drifted). Automated retraining recommended.")
+    except Exception as err:
+        st.info(f"Drift monitor status: {err}")

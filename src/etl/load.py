@@ -56,7 +56,11 @@ def load_batch_into_warehouse(
         ("mart_customer_rfm", df_mart_rfm, "replace"),
     ]
 
-    with engine.begin() as conn:
+    import sqlite3
+    from src.config import BASE_DIR
+    db_path = BASE_DIR / "data" / "warehouse" / "ecommerce_dw.db"
+    
+    with sqlite3.connect(db_path) as conn:
         for table_name, df_table, if_exists_mode in tables_to_load:
             if df_table is not None and not df_table.empty:
                 logger.info("Loading table [%s] (%d rows)...", table_name, len(df_table))
@@ -78,7 +82,7 @@ def load_batch_into_warehouse(
         "execution_duration_sec": audit_metadata.get("duration_sec", 0.0),
         "notes": f"Successfully loaded {counts.get('fact_sales', 0)} sales and {counts.get('mart_customer_rfm', 0)} customer RFM profiles.",
     }])
-    with engine.begin() as conn:
+    with sqlite3.connect(db_path) as conn:
         audit_row.to_sql("etl_audit_log", conn, if_exists="append", index=False)
 
     # Persist sample rejected records into rejection log table
@@ -97,7 +101,7 @@ def load_batch_into_warehouse(
         ]
         rejection_rows = rejection_rows[[c for c in target_cols if c in rejection_rows.columns]]
         rejection_rows["logged_at"] = pd.to_datetime(rejection_rows["logged_at"])
-        with engine.begin() as conn:
+        with sqlite3.connect(db_path) as conn:
             rejection_rows.to_sql("etl_rejection_log", conn, if_exists="append", index=False)
 
     # Export sample snapshot CSVs for project submission verification

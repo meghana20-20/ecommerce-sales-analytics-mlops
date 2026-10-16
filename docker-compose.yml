@@ -20,6 +20,20 @@ services:
       timeout: 5s
       retries: 5
 
+  fastapi_service:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: ecommerce_fastapi_api
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-ecommerce_dw}
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
   streamlit_dashboard:
     build:
       context: .
@@ -27,12 +41,16 @@ services:
     container_name: ecommerce_streamlit_app
     environment:
       DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-ecommerce_dw}
+      API_URL: http://fastapi_service:8000
     ports:
       - "8501:8501"
     depends_on:
       postgres:
         condition: service_healthy
+      fastapi_service:
+        condition: service_started
     restart: unless-stopped
 
 volumes:
   pgdata:
+

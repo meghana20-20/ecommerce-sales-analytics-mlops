@@ -85,5 +85,11 @@ def init_database(engine: Optional[Engine] = None) -> None:
 def execute_query(query: str, params: Optional[dict] = None) -> pd.DataFrame:
     """Executes a SQL SELECT query and returns the results as a Pandas DataFrame."""
     engine = get_engine()
-    with engine.connect() as conn:
-        return pd.read_sql_query(text(query), conn, params=params)
+    if get_active_db_type() == "sqlite":
+        import sqlite3
+        db_path = BASE_DIR / "data" / "warehouse" / "ecommerce_dw.db"
+        with sqlite3.connect(db_path) as conn:
+            return pd.read_sql_query(query, conn, params=params)
+    else:
+        with engine.connect() as conn:
+            return pd.read_sql_query(text(query), conn, params=params)

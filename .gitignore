@@ -1,1 +1,38 @@
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# Large database files
 data/warehouse/ecommerce_dw.db
+mlflow.db
+mlruns.db
+airflow/airflow.db
+
+# MLflow runs (large artifacts)
+mlruns/
+
+# Pytest cache
+.pytest_cache/
+
+# macOS
+.DS_Store
+
+# Environment variables
+.env
+
+# Airflow logs
+airflow/logs/
+
+# Raw large Excel file (downloadable via fetch_dataset.py)
+data/raw/Online Retail.xlsx
+data/raw/online_retail_raw.csv
+data/raw/online_retail_raw.parquet
+data/staging/
